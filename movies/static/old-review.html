@@ -1,0 +1,104 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+  </head>
+  <body>
+    <h1>Write Your Review</h1>
+    <form id="upload">
+      <div class="form-group">
+        <label for="name">Movie Name:</label>
+        <input type="text" class="form-control" id="title"   placeholder="Terminator">
+        </br>
+        <label for="name">User:</label>
+        <input type="text" class="form-control" id="username"   placeholder="User Name">
+        </br>
+        <label for="review">Review:</label>
+        <input type="text" class="form-control" id="review" placeholder="Your review">
+        </br>
+        <label for="name">Rating:</label>
+        <select class="form-control" id="rating">
+          <option selected disabled>Choose a Rating</option>
+          <option value="1">1 Stars</option>
+          <option value="2">2 Stars</option>
+          <option value="3">3 Stars</option>
+          <option value="4">4 Stars</option>
+          <option value="5">5 Stars</option>
+        </select>
+      </div>
+      <button id="submit" type="submit">Submit</button>
+    </form>
+  </body>
+  <script type="text/javascript">
+    var xmlhttp = new XMLHttpRequest();
+    var urlreview = "http://45.55.77.201/javier/review";
+    var url = "https://api.themoviedb.org/3/search/movie?";
+    var apiKey = "api_key=50c1cc8af5a5e07e52ed728d348a4919";
+    var query = "query=";
+
+    var findMovie = function(name, page, callback){
+            var data = "{}";
+        
+            var xhr = new XMLHttpRequest();
+            //xhr.withCredentials = true;
+        
+            xhr.addEventListener("readystatechange", function() {
+              if (this.readyState === this.DONE) {
+                console.log(JSON.parse(this.responseText));
+                callback(JSON.parse(this.responseText).results[0].id);
+              }
+            });
+        
+            xhr.open("GET", url +"page="+ page + "&" + query + encodeURI(name) +"&"+apiKey);
+
+            xhr.send(data);
+    }
+
+    var post = function (movieid) {
+      var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+      xmlhttp.open("POST", urlreview, false);
+
+      //***********************************
+      var data = new FormData();
+      var title = document.getElementById('title');
+      var name = document.getElementById('username');
+      var review = document.getElementById('review');
+      var rating = document.getElementById('rating');
+
+      data.append('movie_name', title.value);
+      data.append('user', name.value);
+      data.append('description', review.value);
+      data.append('rating', rating.value);
+      data.append('movie_id', movieid);
+      //***********************************
+
+
+      //xmlhttp.setRequestHeader("Content-Type", "multipart/form-data");
+      xmlhttp.send(data);
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          console.log(JSON.parse(this.responseText));
+        }
+      };
+    }
+
+    function cleanForm(){
+      var title = document.getElementById('title');
+      var name = document.getElementById('username');
+      var review = document.getElementById('review');
+      var rating = document.getElementById('rating');
+    }
+
+    var sendData = function(){
+
+    };
+
+    var form = document.getElementById('upload');
+    form.onsubmit = function(evt) {
+      evt.preventDefault();
+      var title = document.getElementById('title');
+      var movie = findMovie(title.value, 1, post);
+      location.reload();
+    };
+  </script>
+</html>

@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/details.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Movie Reviews By Javier</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="./">Home</a></li>
+          <li><a href="review">Make a Review</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div id="container">
+      <!--titulo-->
+      <h4 id="title" class="text-center pull-center lead" >Prueba</h4>
+      <!--imagen de portada-->
+      <div id="image_container">
+        <img id="poster" class="img-rounded"/>
+      </div>
+      <!--descripcion de la pelicula-->
+      <div class="container" id="desc_container">
+        <dl id="description_list">
+          <dt>Description:</dt>
+          <dd id="description"></dd>
+          <dt>Average Rating:</dt>
+          <dd id="rating"></dd>
+        </dl> 
+      </div>
+      <!--<p id="description">Something Something darkside</p>-->
+      <!--nuestro rating-->
+      <!--<strong id="rating"></strong>-->
+      <!--lista de reviews-->
+      <div id="reviews" class="container-fluid"></div>
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="modal-title"></h4>
+              <p id="modal-rating"></p>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="js/details.js"></script>
+  </body>
+</html>
