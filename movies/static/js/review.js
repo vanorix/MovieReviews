@@ -5,9 +5,55 @@ var apiKey = "api_key=50c1cc8af5a5e07e52ed728d348a4919";
 var query = "query=";
 var cacheUrl = "http://45.55.77.201/javier/";
 
-document.onload = function(){
-  console.log(test_param);
-}
+var movie_list = [];
+var cache = [];
+var input = document.getElementById("title");
+var awesomplete = new Awesomplete(input);
+
+input.oninput = function(evt){
+  getMovies(evt.target.value);
+};
+
+var getMovies = function(title){
+  if(title.length >= 2) {
+    if(cache.indexOf(title.toLowerCase()) === -1) {
+      cache.push(title.toLowerCase())
+      movies = getMovieList(title);
+      movies.then(function(result) {
+        if(result.length > 0) {
+          for(var i = 0; i < result.length; i++) {
+            if(movie_list.indexOf(result[i].title) == -1) {
+              movie_list.push(result[i].title);
+            }
+          }
+          awesomplete.list = movie_list;
+        }
+      });
+    }
+  }
+};
+
+var getMovieList = function(title){
+  return new Promise(function(resolve, reject){
+    var data = "{}";
+    
+    var xhr = new XMLHttpRequest();
+    //xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function() {
+      if (this.readyState === this.DONE) {
+        response = JSON.parse(this.responseText);
+        resolve(response.results);
+      }
+      else if(this.status == 400){
+        reject('No movies with this name');
+      }
+    });
+
+    xhr.open("GET", url +"page=1" + "&" + query + encodeURI(title) +"&"+apiKey);
+    xhr.send(data);
+  });
+};
 
 var findMovie = function(name, page){
         var data = "{}";
